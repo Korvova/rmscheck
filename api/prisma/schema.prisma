@@ -1,0 +1,79 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+//* ─── Models ───────────────────────────────────────────────────────── */
+
+model Template {
+  id           String  @id @default(cuid())
+  name         String
+  description  String?
+  //* вместо enum → просто String */ 
+  requestType  String // "HTTP" | "TCP" | "UDP"
+  method       String? // для HTTP
+  urlOrHost    String
+  port         Int?
+  //* Json-поля храним как TEXT-строки (stringified JSON) */
+  headersJson  String?
+  bodyJson     String?
+  payload      String?
+  every        Int     @default(1)
+  //* вместо enum → String */ 
+  unit         String  @default("minutes") // "seconds" | "minutes" | "hours"
+  matchersJson String? // stringified JSON
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  devices Device[]
+}
+
+model Device {
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+  imageUrl    String?
+  enabled     Boolean @default(false)
+
+  //* snapshot конфигурации проверки */
+  requestType  String
+  method       String?
+  urlOrHost    String
+  port         Int?
+  headersJson  String?
+  bodyJson     String?
+  payload      String?
+  every        Int     @default(1)
+  unit         String  @default("minutes")
+  matchersJson String?
+
+  //* связь с шаблоном (может быть null) */
+  templateId String?
+  template   Template? @relation(fields: [templateId], references: [id])
+
+  lastCheckedAt DateTime?
+  lastMessage   String?
+  lastColor     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  logs Log[]
+}
+
+model Log {
+  id        String   @id @default(cuid())
+  deviceId  String
+  device    Device   @relation(fields: [deviceId], references: [id])
+  timestamp DateTime @default(now())
+  ok        Boolean
+  message   String
+  color     String?
+
+  @@index([deviceId, timestamp])
+}

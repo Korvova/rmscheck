@@ -1,8 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import DeviceCard from '../components/DeviceCard'
-import type { Device, Matcher, RequestType, TimeUnit } from '../types'
-import { listDevices, createOrUpdateDevice, deleteDevice, addLog, listLogs } from '../services/mock'
+import type { Device, Matcher, RequestType, Template, TimeUnit } from '../types'
+import { listDevices, createOrUpdateDevice, deleteDevice, listLogs } from '../services/apiDevices'
+import { runNow } from '../services/api'
+import { listTemplates, createTemplate } from '../services/apiTemplates'
+
+
 
 export default function DevicesPage() {
   const [devices, setDevices] = useState<Device[]>([])
@@ -10,7 +14,19 @@ export default function DevicesPage() {
   const [editId, setEditId] = useState<string | null>(null)
   const [historyFor, setHistoryFor] = useState<string | null>(null)
 
+
+
   useEffect(() => { (async () => setDevices(await listDevices()))() }, [])
+
+useEffect(() => {
+  const t = setInterval(async () => {
+    setDevices(await listDevices())
+  }, 5000)
+  return () => clearInterval(t)
+}, [])
+
+
+
 
   const editing = useMemo(() => devices.find(d => d.id === editId) || null, [devices, editId])
 
@@ -110,15 +126,12 @@ function HistoryModal({ deviceId, onClose }: { deviceId: string, onClose: ()=>vo
 
 // -------- Modal: Форма устройства --------
 function DeviceFormModal({ initial, onClose, onSave }: { initial: Device | null, onClose: ()=>void, onSave: (d: Device)=>void }) {
-  // Библиотека сохранённых устройств (пока просто список имён)
-  const savedNames = useMemo(()=>{
-    const raw = localStorage.getItem('rmscheck.savedDeviceNames')
-    return raw ? (JSON.parse(raw) as string[]) : []
-  }, [])
+  const [templates, setTemplates] = useState<Template[]>([])
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>('')
 
-  // Локальное состояние формы
-  const [useSaved, setUseSaved] = useState(savedNames.length>0)
-  const [savedName, setSavedName] = useState(savedNames[0] ?? '')
+  useEffect(()=>{ (async()=> setTemplates(await listTemplates()))() }, [])
+
+  const [useTemplate, setUseTemplate] = useState(false)
   const [name, setName] = useState(initial?.name ?? '')
   const [description, setDescription] = useState(initial?.description ?? '')
 
@@ -133,73 +146,97 @@ function DeviceFormModal({ initial, onClose, onSave }: { initial: Device | null,
   const [every, setEvery] = useState<number>(initial?.template.every ?? 1)
   const [unit, setUnit] = useState<TimeUnit>(initial?.template.unit ?? 'minutes')
 
-  const [matchers, setMatchers] = useState<Matcher[]>(initial?.template.matchers ?? [
-    { id: uuid(), pattern: 'ok', color: '#22c55e', label: 'OK' }
-  ])
+  const [matchers, setMatchers] = useState<Matcher[]>(initial?.template.matchers ?? [{ id: uuid(), pattern: 'ok', color: '#22c55e', label: 'OK' }])
 
   const [testBusy, setTestBusy] = useState(false)
   const [testMsg, setTestMsg] = useState<string>('')
   const [testColor, setTestColor] = useState<string | undefined>(undefined)
 
-  useEffect(()=>{
-    if (initial) {
-      setUseSaved(false) // редактируем конкретное устройство
-    }
-  }, [initial])
+  useEffect(()=>{ if (initial) setUseTemplate(false) }, [initial])
 
-  function addMatcher() {
-    setMatchers(ms => [...ms, { id: uuid(), pattern:'', color:'#60a5fa', label:'Custom' }])
+  function applyTemplate(t: Template) {
+    setRequestType(t.requestType)
+    setMethod(t.method ?? 'GET')
+    setUrlOrHost(t.urlOrHost)
+    setPort(t.port)
+    setPayload(t.payload ?? '')
+    setHeadersText(t.headers ? JSON.stringify(t.headers, null, 2) : '')
+    setBodyText(t.body ?? '')
+    setEvery(t.every)
+    setUnit(t.unit)
+    setMatchers((t.matchers || []).map(m => ({ ...m, id: uuid() })))
+    if (!name) setName(t.name) // если имя пустое — подсунем из шаблона
   }
-  function updateMatcher(id: string, patch: Partial<Matcher>) {
-    setMatchers(ms => ms.map(m => m.id === id ? { ...m, ...patch } : m))
+
+  async function handleTemplateSelect(id: string) {
+    setSelectedTemplateId(id); setUseTemplate(true)
+    const t = templates.find(x => x.id === id); if (t) applyTemplate(t)
   }
-  function removeMatcher(id: string) { setMatchers(ms => ms.filter(m => m.id !== id)) }
+
+  async function handleSaveTemplate() {
+    const title = prompt('Название шаблона:', name || 'New Template')
+    if (!title) return
+    let headers: Record<string,string> | undefined = undefined
+    if (headersText.trim()) { try { headers = JSON.parse(headersText) } catch { alert('Неверный JSON в заголовках'); return } }
+    if (bodyText.trim()) { try { JSON.parse(bodyText) } catch { alert('Неверный JSON в теле'); return } }
+
+    const payloadT = {
+      name: title,
+      description,
+      requestType,
+      method: requestType==='HTTP' ? method as any : undefined,
+      urlOrHost,
+      port,
+      headers,
+      body: bodyText || undefined,
+      payload,
+      every,
+      unit,
+      matchers
+    }
+    const id = await createTemplate(payloadT as any)
+    setTemplates(await listTemplates())
+    setSelectedTemplateId(id)
+    setUseTemplate(true)
+    alert('Шаблон сохранён')
+  }
 
   async function handleTest() {
     setTestBusy(true)
     try {
-      // ⚠️ Пока симулируем. Позже здесь будет реальный вызов API /run-now
-      await new Promise(res=>setTimeout(res, 500))
-      const simulated = simulateResponse({ requestType, method, urlOrHost, port, payload, body: bodyText })
-      const matched = matchers.find(m => simulated.message.includes(m.pattern))
-      setTestMsg(simulated.message)
-      setTestColor(matched?.color ?? (simulated.ok ? '#22c55e' : '#ef4444'))
+      let headers: Record<string,string> | undefined = undefined
+      if (headersText.trim()) headers = JSON.parse(headersText)
+      let bodyObj: unknown = undefined
+      if (bodyText.trim()) bodyObj = JSON.parse(bodyText)
+      const resp = await runNow({ requestType, method, urlOrHost, port, headers, body: bodyObj, payload, matchers })
+      setTestMsg(resp.message)
+      setTestColor(resp.color ?? (resp.ok ? '#22c55e' : '#ef4444'))
+    } catch (e: any) {
+      setTestMsg(e?.message || 'Ошибка запроса')
+      setTestColor('#ef4444')
     } finally { setTestBusy(false) }
   }
 
   function handleSave() {
-    // Простая проверка JSON для заголовков/тела (не обязательно, но полезно)
     let headers: Record<string,string> | undefined = undefined
-    if (headersText.trim()) {
-      try { headers = JSON.parse(headersText) } catch { alert('Неверный JSON в заголовках'); return }
-    }
-    if (bodyText.trim()) {
-      try { JSON.parse(bodyText) } catch { alert('Неверный JSON в теле запроса'); return }
-    }
+    if (headersText.trim()) { try { headers = JSON.parse(headersText) } catch { alert('Неверный JSON в заголовках'); return } }
+    if (bodyText.trim()) { try { JSON.parse(bodyText) } catch { alert('Неверный JSON в теле'); return } }
 
-    const id = initial?.id ?? uuid()
+    const id = initial?.id || uuid()
     const device: Device = {
       id,
-      name: useSaved ? (savedName || name || `Device ${id.slice(0,4)}`) : (name || `Device ${id.slice(0,4)}`),
+      name: name || `Device ${id.slice(0,4)}`,
       description,
-      enabled: false,
+      enabled: initial?.enabled ?? false,
       template: {
         id: uuid(), requestType, method: requestType==='HTTP' ? method as any : undefined,
-        urlOrHost, port, payload, every, unit, matchers,
-        headers, body: bodyText || undefined
+        urlOrHost, port, payload, every, unit, matchers, headers, body: bodyText || undefined
       },
-      lastMessage: testMsg || undefined,
-      lastColor: testColor || undefined,
-      createdAt: new Date().toISOString(),
+      lastMessage: testMsg || initial?.lastMessage,
+      lastColor: testColor || initial?.lastColor,
+      lastCheckedAt: testMsg ? new Date().toISOString() : initial?.lastCheckedAt,
+      createdAt: initial?.createdAt || new Date().toISOString(),
     }
-
-    // Сохраним имя в библиотеку (для селектора «выбрать устройство»)
-    if (!useSaved && device.name) {
-      const names = new Set(savedNames)
-      names.add(device.name)
-      localStorage.setItem('rmscheck.savedDeviceNames', JSON.stringify(Array.from(names)))
-    }
-
     onSave(device)
   }
 
@@ -210,24 +247,25 @@ function DeviceFormModal({ initial, onClose, onSave }: { initial: Device | null,
       <div className="modal" onClick={e=>e.stopPropagation()}>
         <div className="modal-header">
           <div className="card-title">{initial ? 'Изменить устройство' : 'Добавить устройство'}</div>
-          <button className="btn" onClick={onClose}>Закрыть</button>
+          <div style={{ display:'flex', gap:8 }}>
+            <button className="btn" onClick={handleSaveTemplate}>Сохранить как шаблон</button>
+            <button className="btn" onClick={onClose}>Закрыть</button>
+          </div>
         </div>
         <div className="modal-body">
-          {/* Выбор сохранённого устройства или ввод нового */}
+          {/* Выбор шаблона */}
           <div className="row">
             <div>
-              <label className="label">Выбрать сохранённое устройство</label>
-              <select className="select" disabled={!!initial} value={useSaved && savedName ? savedName : ''}
-                onChange={e=>{ setUseSaved(true); setSavedName(e.currentTarget.value) }}>
-                {savedNames.length === 0 && <option value="">Нет сохранённых</option>}
-                {savedNames.map(n => <option key={n} value={n}>{n}</option>)}
+              <label className="label">Выбрать шаблон</label>
+              <select className="select" value={selectedTemplateId} onChange={e=> handleTemplateSelect(e.currentTarget.value)}>
+                <option value="">—</option>
+                {templates.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
               </select>
-              <div className="help">Можно быстро выбрать профиль устройства. Или отключите и введите новое название справа.</div>
+              <div className="help">Выберите шаблон чтобы заполнить поля ниже.</div>
             </div>
             <div>
-              <label className="label">Или ввести новое название</label>
-              <input className="input" value={name} disabled={useSaved && !initial}
-                onChange={e=>{ setUseSaved(false); setName(e.currentTarget.value) }} placeholder="Например, API Gateway" />
+              <label className="label">Название устройства</label>
+              <input className="input" value={name} onChange={e=> setName(e.currentTarget.value)} placeholder="Например, API Gateway" />
             </div>
           </div>
 
@@ -287,7 +325,7 @@ function DeviceFormModal({ initial, onClose, onSave }: { initial: Device | null,
                 <label className="label">Заголовки (JSON)</label>
                 <textarea className="textarea" rows={6} value={headersText} onChange={e=> setHeadersText(e.currentTarget.value)} placeholder='{"Accept":"*/*"}' />
               </div>
-              {showBody && (
+              {['POST','PUT','PATCH'].includes(method) && (
                 <div>
                   <label className="label">Тело запроса (JSON)</label>
                   <textarea className="textarea" rows={6} value={bodyText} onChange={e=> setBodyText(e.currentTarget.value)} placeholder='{"ping":"test"}' />
@@ -316,28 +354,28 @@ function DeviceFormModal({ initial, onClose, onSave }: { initial: Device | null,
           <div>
             <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
               <div className="card-title">Эталон успешного ответа</div>
-              <button className="btn" onClick={addMatcher}>+ Эталон</button>
+              <button className="btn" onClick={()=> setMatchers(ms => [...ms, { id: uuid(), pattern:'', color:'#60a5fa', label:'Custom' }])}>+ Эталон</button>
             </div>
             <div style={{ marginTop:8, display:'grid', gap:8 }}>
               {matchers.map(m => (
                 <div key={m.id} className="matcher">
                   <div>
                     <label className="label">Поля успешного ответа / паттерн</label>
-                    <input className="input" value={m.pattern} onChange={e=>updateMatcher(m.id, { pattern:e.currentTarget.value })} placeholder="например: ok" />
+                    <input className="input" value={m.pattern} onChange={e=> setMatchers(ms => ms.map(x => x.id===m.id ? { ...x, pattern: e.currentTarget.value } : x))} placeholder="например: ok" />
                   </div>
                   <div>
                     <label className="label">Цвет</label>
                     <div style={{ display:'flex', alignItems:'center', gap:8 }}>
                       <div className="colorbox" style={{ background:m.color }} />
-                      <input className="input" value={m.color} onChange={e=>updateMatcher(m.id, { color:e.currentTarget.value })} placeholder="#22c55e" />
+                      <input className="input" value={m.color} onChange={e=> setMatchers(ms => ms.map(x => x.id===m.id ? { ...x, color: e.currentTarget.value } : x))} placeholder="#22c55e" />
                     </div>
                   </div>
                   <div>
                     <label className="label">Описание</label>
-                    <input className="input" value={m.label ?? ''} onChange={e=>updateMatcher(m.id, { label:e.currentTarget.value })} placeholder="OK" />
+                    <input className="input" value={m.label ?? ''} onChange={e=> setMatchers(ms => ms.map(x => x.id===m.id ? { ...x, label: e.currentTarget.value } : x))} placeholder="OK" />
                   </div>
                   <div>
-                    <button className="btn danger" onClick={()=>removeMatcher(m.id)}>Удалить</button>
+                    <button className="btn danger" onClick={()=> setMatchers(ms => ms.filter(x => x.id !== m.id))}>Удалить</button>
                   </div>
                 </div>
               ))}

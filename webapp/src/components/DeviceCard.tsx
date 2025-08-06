@@ -35,6 +35,12 @@ export default function DeviceCard({ device, onStart, onStop, onEdit, onDelete, 
              `UDP ${device.template.urlOrHost}:${device.template.port ?? 161}`}
           </div>
         </div>
+
+<div style={{ fontSize:12, color:'#6b7280' }}>
+        Последняя проверка: {device.lastCheckedAt ? new Date(device.lastCheckedAt).toLocaleString() : '—'}
+      </div>
+
+
         {device.lastMessage && <div style={{ fontSize:13 }}>Последний ответ: {device.lastMessage}</div>}
       </div>
       <div className="card-footer">

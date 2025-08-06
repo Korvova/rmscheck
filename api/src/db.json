@@ -1,0 +1,247 @@
+{
+  "devices": [
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "name": "микрофон",
+      "description": "",
+      "enabled": false,
+      "template": {
+        "id": "aef7b349-7f4b-4b34-97e8-b38150fb8f8c",
+        "requestType": "HTTP",
+        "method": "GET",
+        "urlOrHost": "http://217.114.10.226/synoptic/rooms/2",
+        "payload": "",
+        "every": 10,
+        "unit": "seconds",
+        "matchers": [
+          {
+            "id": "e3e96fc7-e415-4dad-98b2-90ac3125c50d",
+            "pattern": "201 OK",
+            "color": "#22c55e",
+            "label": "OK"
+          },
+          {
+            "id": "17b14f86-50fa-4a2f-be59-35ab367d3934",
+            "pattern": "202 OK",
+            "color": "#60a5fa",
+            "label": "Custom"
+          }
+        ]
+      },
+      "lastCheckedAt": "2025-08-06T14:30:40.715Z",
+      "createdAt": "2025-08-06T14:23:01.622Z",
+      "lastMessage": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "lastColor": "#22c55e"
+    }
+  ],
+  "logs": [
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754489827406",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:17:07.406Z",
+      "ok": true,
+      "message": "200 OK in 6ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754489838408",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:17:18.408Z",
+      "ok": true,
+      "message": "200 OK in 4ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754489848414",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:17:28.414Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754489859416",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:17:39.416Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490000474",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:20:00.474Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490011477",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:20:11.476Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490024480",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:20:24.480Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490034486",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:20:34.486Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490045489",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:20:45.488Z",
+      "ok": true,
+      "message": "200 OK in 4ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490116515",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:21:56.515Z",
+      "ok": true,
+      "message": "200 OK in 4ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#60a5fa"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490126520",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:22:06.520Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#60a5fa"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490136524",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:22:16.524Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#60a5fa"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490147527",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:22:27.527Z",
+      "ok": true,
+      "message": "200 OK in 4ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#60a5fa"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490158530",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:22:38.529Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#60a5fa"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490169531",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:22:49.530Z",
+      "ok": true,
+      "message": "200 OK in 4ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#60a5fa"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490180532",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:23:00.531Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#60a5fa"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490191533",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:23:11.533Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490201538",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:23:21.537Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490211544",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:23:31.544Z",
+      "ok": true,
+      "message": "200 OK in 5ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490222547",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:23:42.546Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490232551",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:23:52.551Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490243552",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:24:03.552Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490254555",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:24:14.554Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490264558",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:24:24.558Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490297570",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:24:57.569Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    },
+    {
+      "id": "db092ec0-8551-4eab-bddf-706f6b8fb9d2-1754490640715",
+      "deviceId": "db092ec0-8551-4eab-bddf-706f6b8fb9d2",
+      "timestamp": "2025-08-06T14:30:40.715Z",
+      "ok": true,
+      "message": "200 OK in 3ms; body: <!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/synoptic/vite.svg\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Vite + React</title>\n    <script type=\"module\" crossorigin src=\"/synoptic/assets/index-294389b3.js\"></script>\n    <link rel=\"stylesheet\" href=\"/synoptic/assets/index-c41f8a83.css\">\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    \n  </body>\n</html>\n",
+      "color": "#22c55e"
+    }
+  ]
+}

@@ -1,12 +1,7 @@
 export type RequestType = 'HTTP' | 'TCP' | 'UDP'
 export type TimeUnit = 'seconds' | 'minutes' | 'hours'
 
-export interface Matcher {
-  id: string
-  pattern: string // строка или regex-паттерн (пока строка)
-  color: string   // hex или css
-  label?: string  // подпись ("OK", "Partial", ...)
-}
+export interface Matcher { id: string; pattern: string; color: string; label?: string }
 
 export interface CheckTemplate {
   id: string
@@ -15,8 +10,24 @@ export interface CheckTemplate {
   urlOrHost: string
   port?: number
   headers?: Record<string, string>
-  body?: string // JSON как строка
-  payload?: string // для UDP (строка)
+  body?: string
+  payload?: string
+  every: number
+  unit: TimeUnit
+  matchers: Matcher[]
+}
+
+export interface Template { // library item
+  id: string
+  name: string
+  description?: string
+  requestType: RequestType
+  method?: 'GET'|'POST'|'PUT'|'PATCH'|'DELETE'|'HEAD'|'OPTIONS'
+  urlOrHost: string
+  port?: number
+  headers?: Record<string,string>
+  body?: string
+  payload?: string
   every: number
   unit: TimeUnit
   matchers: Matcher[]
@@ -30,15 +41,9 @@ export interface Device {
   enabled: boolean
   template: CheckTemplate
   lastMessage?: string
-  lastColor?: string // вычисляется по матчерам / статус
+  lastColor?: string
+  lastCheckedAt?: string
   createdAt: string
 }
 
-export interface ResultLog {
-  id: string
-  deviceId: string
-  timestamp: string
-  ok: boolean
-  message: string
-  color?: string
-}
+export interface ResultLog { id: string; deviceId: string; timestamp: string; ok: boolean; message: string; color?: string }
