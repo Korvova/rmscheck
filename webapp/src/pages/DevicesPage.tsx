@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, useCallback } from 'react'
 import { v4 as uuid } from 'uuid'
 import DeviceCard from '../components/DeviceCard'
 import type { Device, Matcher, RequestType, Template, TimeUnit } from '../types'
 import { listDevices, createOrUpdateDevice, deleteDevice, listLogs } from '../services/apiDevices'
 import { runNow } from '../services/api'
 import { listTemplates, createTemplate } from '../services/apiTemplates'
+
 
 
 
@@ -98,20 +99,46 @@ useEffect(() => {
 // -------- Modal: История (заглушка на mock-логах) --------
 function HistoryModal({ deviceId, onClose }: { deviceId: string, onClose: ()=>void }) {
   const [rows, setRows] = useState<{t:string; msg:string; color?:string}[]>([])
-  useEffect(()=>{ (async()=>{
-    const logs = await listLogs(deviceId)
-    setRows(logs.slice(-100).map(l=>({ t:new Date(l.timestamp).toLocaleString(), msg:l.message, color:l.color })))
-  })() }, [deviceId])
+  const [busy, setBusy] = useState(false)
+
+  // загрузка + повторная загрузка
+  const fetchLogs = useCallback(async () => {
+    setBusy(true)
+    try {
+      const logs = await listLogs(deviceId)
+      setRows(
+        logs
+          .slice(-200)
+          .map(l => ({ t: new Date(l.timestamp).toLocaleString(), msg: l.message, color: l.color }))
+      )
+    } finally {
+      setBusy(false)
+    }
+  }, [deviceId])
+
+  // при открытии и автообновление каждые 3 сек
+  useEffect(() => {
+    fetchLogs()
+    const t = setInterval(fetchLogs, 3000)
+    return () => clearInterval(t)
+  }, [fetchLogs])
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal" onClick={e=>e.stopPropagation()}>
         <div className="modal-header">
           <div className="card-title">История</div>
-          <button className="btn" onClick={onClose}>Закрыть</button>
+          <div style={{ display:'flex', gap:8 }}>
+            <button className="btn" onClick={fetchLogs} disabled={busy}>
+              {busy ? 'Обновляю…' : 'Обновить'}
+            </button>
+            <button className="btn" onClick={onClose}>Закрыть</button>
+          </div>
         </div>
         <div className="modal-body" style={{ maxHeight: '60vh', overflow:'auto' }}>
-          {rows.length === 0 ? <div>Нет записей</div> : rows.map((r,i)=> (
+          {rows.length === 0 ? (
+            <div>Нет записей</div>
+          ) : rows.map((r,i)=> (
             <div key={i} style={{ display:'flex', gap:8, alignItems:'center' }}>
               <span className="dot" style={{ background: r.color ?? '#9ca3af' }} />
               <div style={{ fontSize:12, color:'#6b7280', width:180 }}>{r.t}</div>
